@@ -4,6 +4,8 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.BorderFactory;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -16,11 +18,10 @@ public class TicTacFrame extends JFrame {
     // Images:
     final ImageIcon titleImg = new ImageIcon("resources/TicTacToe.png");
     // Colours:
-    final Color NAVY_SKY_BLUE = new Color(0x2D3047); // Util. button colours
-    final Color WHITE = new Color(0xFFFFFF); // Button Text, borders
-    final Color SKY_BLUE = new Color(0x77B1FF); // Tic Tac Toe buttons
+    final Color NAVY_BLUE = new Color(0x21284F); // Util. button colours
+    final Color WHITE = new Color(0xFFFFFF); // Button Text, borders, tic-tac-toe buttons.
     final Color BLUE = new Color(0x6791FF); // Background
-    final Color BLACK = new Color(0x000000); // Tic Tac Toe Lines
+    final Color BLACK = new Color(0x3D539B); // Tic Tac Toe Lines
 
     // JPanels:
     JPanel ticTacPanel;
@@ -35,10 +36,13 @@ public class TicTacFrame extends JFrame {
     JButton playBTN;
     JButton resetBoardBTN;
     JButton showWinsBTN;
-    JButton[][] ticTacBTNS = new JButton[4][4];
-
-    // Util:
-    int curTicTacBTNNum = 1;
+    JButton[] ticTacBTNS = new JButton[16];
+    /*
+    [] [] [] []
+    [] [] [] []
+    [] [] [] []
+    [] [] [] []
+     */
 
     public TicTacFrame() {
 // ---- Frame config: ----------------------------------------
@@ -52,25 +56,31 @@ public class TicTacFrame extends JFrame {
 // ---- ticTacPanel config: -------------------------------
         ticTacPanel = new JPanel();
         ticTacPanel.setPreferredSize(new Dimension(525, 525));
-        ticTacPanel.setLayout(new GridLayout(4, 4, 20, 20));
+        ticTacPanel.setLayout(new GridLayout(4, 4, 15, 15));
         ticTacPanel.setBackground(BLACK);
-//        ticTacPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-        for(int i = 0; i < 4; i++) {
-            for(int j = 0; j < 4; j++) {
-                ticTacBTNS[i][j] = new JButton(curTicTacBTNNum + "");
-                ticTacBTNS[i][j].setBackground(SKY_BLUE);
-                ticTacBTNS[i][j].setFocusable(false);
-                ticTacBTNS[i][j].setSize(new Dimension(120, 120));
-                ticTacBTNS[i][j].setBorder(BorderFactory.createRaisedBevelBorder());
-                ticTacPanel.add(ticTacBTNS[i][j]);
-                curTicTacBTNNum++;
-            }
+        for(int i = 0; i < 16; i++) {
+            ticTacBTNS[i] = new JButton();
+            ticTacBTNS[i].setBackground(WHITE);
+            ticTacBTNS[i].setFocusable(false);
+            ticTacBTNS[i].setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+            ticTacBTNS[i].setFont(new Font("Century Gothic", Font.BOLD | Font.ITALIC, 16));
+            ticTacBTNS[i].setText("Press \nPlay!");
+            ticTacBTNS[i].addActionListener(new TicTacBTNListener(this));
+            ticTacPanel.add(ticTacBTNS[i]);
         }
 
 // ---- titleLabel config: ------------------------------------
-        titleLabel = new JLabel("Tic Tac Toe.. Toc?");
+        titleLabel = new JLabel("Tic Tac Toe... Toc?");
         titleLabel.setFont(new Font("Century Gothic", Font.BOLD | Font.ITALIC, 32));
         titleLabel.setForeground(WHITE);
+        titleLabel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEmptyBorder(), // Border style
+                "Introducing...", // Title
+                TitledBorder.LEFT, // Horizontal positioning of the text.
+                TitledBorder.BELOW_TOP, // Vertical positioning of the text.
+                new Font("Century Gothic", Font.BOLD | Font.ITALIC, 12), // Font style
+                WHITE // Text colour.
+        ));
 
 // ---- titlePanel config: ------------------------------------
         titlePanel = new JPanel();
@@ -91,22 +101,26 @@ public class TicTacFrame extends JFrame {
         playBTN = new JButton("Play");
         playBTN.setFont(new Font("Century Gothic", Font.BOLD | Font.ITALIC, 14));
         playBTN.setFocusable(false);
-        playBTN.setBackground(NAVY_SKY_BLUE);
+        playBTN.setBackground(NAVY_BLUE);
         playBTN.setForeground(WHITE);
+        playBTN.addActionListener(new PlayBTNListener(this));
 
 // ---- resetBoardBTN config: ---------------------------------
         resetBoardBTN = new JButton("Reset Board");
         resetBoardBTN.setFont(new Font("Century Gothic", Font.BOLD | Font.ITALIC, 14));
         resetBoardBTN.setFocusable(false);
-        resetBoardBTN.setBackground(NAVY_SKY_BLUE);
+        resetBoardBTN.setBackground(NAVY_BLUE);
         resetBoardBTN.setForeground(WHITE);
+        resetBoardBTN.addActionListener(new ResetBoardBTNListener(this));
 
 // ---- showWinsBTN config: ----------------------------------
         showWinsBTN = new JButton("Show Wins");
         showWinsBTN.setFont(new Font("Century Gothic", Font.BOLD | Font.ITALIC, 14));
         showWinsBTN.setFocusable(false);
-        showWinsBTN.setBackground(NAVY_SKY_BLUE);
+        showWinsBTN.setBackground(NAVY_BLUE);
         showWinsBTN.setForeground(WHITE);
+        showWinsBTN.addActionListener(new ShowWinsBTNListener(this));
+
 // ---- buttonPanel config: -----------------------------------
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
@@ -161,8 +175,4 @@ Plan:
 
 Optional:
     - JMenuBar: One tab, called game, which has 3 buttons: play, reset board, show wins.
-
-
-
-
  */
