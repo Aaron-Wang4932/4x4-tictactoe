@@ -1,6 +1,5 @@
-import javax.swing.JButton;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.event.*;
 
 public class ResetBoardBTNListener implements ActionListener {
     TicTacFrame ticTacFrame;
@@ -11,6 +10,9 @@ public class ResetBoardBTNListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         for(JButton button : ticTacFrame.ticTacBTNS) button.setText("");
-        TicTacBTNListener.resetTurn();
+        TicTacBTNListener.isXTurn = true;
+        TicTacBTNListener.numClicks = 0;
+        TicTacBTNListener.winnerExists = false;
+        for(int i = 0; i < 16; i++) TicTacBTNListener.curBoard[i] = ' ';
     }
 }

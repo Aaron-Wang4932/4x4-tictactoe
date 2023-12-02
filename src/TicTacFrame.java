@@ -1,18 +1,6 @@
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import javax.swing.BorderFactory;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+import javax.swing.*;
+import javax.swing.border.*;
+import java.awt.*;
 
 public class TicTacFrame extends JFrame {
     // Images:
@@ -33,7 +21,6 @@ public class TicTacFrame extends JFrame {
     JLabel titleLabel;
 
     // JButtons:
-    JButton playBTN;
     JButton resetBoardBTN;
     JButton showWinsBTN;
     JButton[] ticTacBTNS = new JButton[16];
@@ -64,7 +51,6 @@ public class TicTacFrame extends JFrame {
             ticTacBTNS[i].setFocusable(false);
             ticTacBTNS[i].setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
             ticTacBTNS[i].setFont(new Font("Century Gothic", Font.BOLD | Font.ITALIC, 16));
-            ticTacBTNS[i].setText("Press \nPlay!");
             ticTacBTNS[i].addActionListener(new TicTacBTNListener(this));
             ticTacPanel.add(ticTacBTNS[i]);
         }
@@ -97,14 +83,6 @@ public class TicTacFrame extends JFrame {
         eastPanel.setPreferredSize(new Dimension(68, 750));
         westPanel.setPreferredSize(new Dimension(68, 750));
 
-// ---- playBTN config: ---------------------------------------
-        playBTN = new JButton("Play");
-        playBTN.setFont(new Font("Century Gothic", Font.BOLD | Font.ITALIC, 14));
-        playBTN.setFocusable(false);
-        playBTN.setBackground(NAVY_BLUE);
-        playBTN.setForeground(WHITE);
-        playBTN.addActionListener(new PlayBTNListener(this));
-
 // ---- resetBoardBTN config: ---------------------------------
         resetBoardBTN = new JButton("Reset Board");
         resetBoardBTN.setFont(new Font("Century Gothic", Font.BOLD | Font.ITALIC, 14));
@@ -125,7 +103,6 @@ public class TicTacFrame extends JFrame {
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         buttonPanel.setBackground(BLUE);
-        buttonPanel.add(playBTN);
         buttonPanel.add(resetBoardBTN);
         buttonPanel.add(showWinsBTN);
         titlePanel.setPreferredSize(new Dimension(750, 68));
@@ -140,39 +117,12 @@ public class TicTacFrame extends JFrame {
         setLocationRelativeTo(null); // Centres the JFrame.
         setResizable(false);
         setVisible(true);
+
+        Timer timer = new Timer(250, e -> JOptionPane.showMessageDialog(this,
+                "The game has started!",
+                "Note: ",
+                javax.swing.JOptionPane.INFORMATION_MESSAGE));
+        timer.setRepeats(false);
+        timer.start();
     }
 }
-/*
-
-Plan:
-    - JFrame:
-        - Border layout manager.
-        - Background colour: BLUE.
-    - Centre JPanel (whiteBGPanel):
-        - null layout manager.
-        - Background colour: WHITE
-        - 370px x 370px size.
-        - Add another JPanel (containing tic-tac-toe buttons) to (x,y) coordinates of (10, 10).
-            - Tic-Tac-Toe Panel (ticTacPanel):
-                - Grid layout manager - 4x4 grid, one cell for each button
-                    - Background colour: SKY_BLUE
-                    - 10px margins both horizontally and vertically.
-                    - GridLayout ticTacToeButtonLayout = new GridLayout(4, 4, 10, 10)
-                - 350px x 350px size.
-                - Background colour: WHITE
-    - North JPanel (titlePanel):
-        - Flow layout manager, default setting: centred.
-        - 410px x 30px.
-        - Label: "Tic-Tac-Toe-Toc!"
-    - East/West JPanel (eastPanel, westPanel):
-        - Respective alignment
-        - Serves as spacing. Nothing contained within.
-    - South JPanel (buttonPanel):
-        - Flow layout manager, default setting: centred.
-        - 3 Buttons: Play, Reset Board, Show Wins
-            - On button press, when not playing: popup appears, stating "Please press play."
-            - Show wins should be a popup.
-
-Optional:
-    - JMenuBar: One tab, called game, which has 3 buttons: play, reset board, show wins.
- */
