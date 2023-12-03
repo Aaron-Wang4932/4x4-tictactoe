@@ -1,5 +1,6 @@
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class TicTacFrame extends JFrame {

@@ -1,5 +1,6 @@
-import javax.swing.*;
-import java.awt.event.*;
+import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ResetBoardBTNListener implements ActionListener {
     TicTacFrame ticTacFrame;
