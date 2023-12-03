@@ -75,44 +75,28 @@ public class TicTacBTNListener implements ActionListener {
             isXTurn = true;
         }
         numClicks++;
-        checkForWin();
+        checkForWin('X');
+        if(!winnerExists) checkForWin('O');
     }
-    private void checkForWin() {
+    private void checkForWin(char symbol) {
         // I really don't like this.
-        boolean rowCheckX = (curBoard[0] == 'X') && (curBoard[0] == curBoard[1]) && (curBoard[1] == curBoard[2]) && (curBoard[2] == curBoard[3])
-                || (curBoard[4] == 'X') && (curBoard[4] == curBoard[5]) && (curBoard[5] == curBoard[6]) && (curBoard[6] == curBoard[7])
-                || (curBoard[8] == 'X') && (curBoard[8] == curBoard[9]) && (curBoard[9] == curBoard[10]) && (curBoard[10] == curBoard[11])
-                || (curBoard[12] == 'X') && (curBoard[12] == curBoard[13]) && (curBoard[13] == curBoard[14]) && (curBoard[14] == curBoard[15]);
+        boolean rowCheck = (curBoard[0] == symbol) && (curBoard[0] == curBoard[1]) && (curBoard[1] == curBoard[2]) && (curBoard[2] == curBoard[3])
+                || (curBoard[4] == symbol) && (curBoard[4] == curBoard[5]) && (curBoard[5] == curBoard[6]) && (curBoard[6] == curBoard[7])
+                || (curBoard[8] == symbol) && (curBoard[8] == curBoard[9]) && (curBoard[9] == curBoard[10]) && (curBoard[10] == curBoard[11])
+                || (curBoard[12] == symbol) && (curBoard[12] == curBoard[13]) && (curBoard[13] == curBoard[14]) && (curBoard[14] == curBoard[15]);
 
-        boolean colCheckX = (curBoard[0] == 'X') && (curBoard[0] == curBoard[4]) && (curBoard[4] == curBoard[8]) && (curBoard[8] == curBoard[12])
-                || (curBoard[1] == 'X') && (curBoard[1] == curBoard[5]) && (curBoard[5] == curBoard[9]) && (curBoard[9] == curBoard[13])
-                || (curBoard[2] == 'X') && (curBoard[2] == curBoard[6]) && (curBoard[6] == curBoard[10]) && (curBoard[10] == curBoard[14])
-                || (curBoard[3] == 'X') && (curBoard[3] == curBoard[7]) && (curBoard[7] == curBoard[11]) && (curBoard[11] == curBoard[15]);
+        boolean colCheck = (curBoard[0] == symbol) && (curBoard[0] == curBoard[4]) && (curBoard[4] == curBoard[8]) && (curBoard[8] == curBoard[12])
+                || (curBoard[1] == symbol) && (curBoard[1] == curBoard[5]) && (curBoard[5] == curBoard[9]) && (curBoard[9] == curBoard[13])
+                || (curBoard[2] == symbol) && (curBoard[2] == curBoard[6]) && (curBoard[6] == curBoard[10]) && (curBoard[10] == curBoard[14])
+                || (curBoard[3] == symbol) && (curBoard[3] == curBoard[7]) && (curBoard[7] == curBoard[11]) && (curBoard[11] == curBoard[15]);
 
-        boolean diagCheckX = (curBoard[0] == 'X') && (curBoard[0] == curBoard[5]) && (curBoard[5] == curBoard[10]) && (curBoard[10] == curBoard[15])
-                || (curBoard[3] == 'X') && (curBoard[3] == curBoard[6]) && (curBoard[6] == curBoard[9]) && (curBoard[9] == curBoard[12]);
+        boolean diagCheck = (curBoard[0] == symbol) && (curBoard[0] == curBoard[5]) && (curBoard[5] == curBoard[10]) && (curBoard[10] == curBoard[15])
+                || (curBoard[3] == symbol) && (curBoard[3] == curBoard[6]) && (curBoard[6] == curBoard[9]) && (curBoard[9] == curBoard[12]);
 
-        boolean rowCheckO = (curBoard[0] == 'O') && (curBoard[0] == curBoard[1]) && (curBoard[1] == curBoard[2]) && (curBoard[2] == curBoard[3])
-                || (curBoard[4] == 'O') && (curBoard[4] == curBoard[5]) && (curBoard[5] == curBoard[6]) && (curBoard[6] == curBoard[7])
-                || (curBoard[8] == 'O') && (curBoard[8] == curBoard[9]) && (curBoard[9] == curBoard[10]) && (curBoard[10] == curBoard[11])
-                || (curBoard[12] == 'O') && (curBoard[12] == curBoard[13]) && (curBoard[13] == curBoard[14]) && (curBoard[14] == curBoard[15]);
-
-        boolean colCheckO = (curBoard[0] == 'O') && (curBoard[0] == curBoard[4]) && (curBoard[4] == curBoard[8]) && (curBoard[8] == curBoard[12])
-                || (curBoard[1] == 'O') && (curBoard[1] == curBoard[5]) && (curBoard[5] == curBoard[9]) && (curBoard[9] == curBoard[13])
-                || (curBoard[2] == 'O') && (curBoard[2] == curBoard[6]) && (curBoard[6] == curBoard[10]) && (curBoard[10] == curBoard[14])
-                || (curBoard[3] == 'O') && (curBoard[3] == curBoard[7]) && (curBoard[7] == curBoard[11]) && (curBoard[11] == curBoard[15]);
-
-        boolean diagCheckO = (curBoard[0] == 'O') && (curBoard[0] == curBoard[5]) && (curBoard[5] == curBoard[10]) && (curBoard[10] == curBoard[15])
-                || (curBoard[3] == 'O') && (curBoard[3] == curBoard[6]) && (curBoard[6] == curBoard[9]) && (curBoard[9] == curBoard[12]);
-
-        if(rowCheckX || colCheckX || diagCheckX) {
-            JOptionPane.showMessageDialog(ticTacFrame, "X is the winner!", "Congratulations!", JOptionPane.INFORMATION_MESSAGE, winner);
+        if(rowCheck || colCheck || diagCheck) {
+            JOptionPane.showMessageDialog(ticTacFrame, symbol + " is the winner!", "Congratulations!", JOptionPane.INFORMATION_MESSAGE, winner);
             winnerExists = true;
-            writeToFile("X");
-        } else if(rowCheckO || colCheckO || diagCheckO) {
-            JOptionPane.showMessageDialog(ticTacFrame, "O is the winner!", "Congratulations!", JOptionPane.INFORMATION_MESSAGE, winner);
-            winnerExists = true;
-            writeToFile("O");
+            writeToFile(symbol + "");
         } else if(numClicks == 16) {
             JOptionPane.showMessageDialog(ticTacFrame, "The game is tied!", "Note:", JOptionPane.INFORMATION_MESSAGE, winner);
             winnerExists = true;

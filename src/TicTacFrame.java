@@ -3,8 +3,6 @@ import javax.swing.border.*;
 import java.awt.*;
 
 public class TicTacFrame extends JFrame {
-    // Images:
-    final ImageIcon titleImg = new ImageIcon("resources/TicTacToe.png");
     // Colours:
     final Color NAVY_BLUE = new Color(0x21284F); // Util. button colours
     final Color WHITE = new Color(0xFFFFFF); // Button Text, borders, tic-tac-toe buttons.
@@ -24,20 +22,13 @@ public class TicTacFrame extends JFrame {
     JButton resetBoardBTN;
     JButton showWinsBTN;
     JButton[] ticTacBTNS = new JButton[16];
-    /*
-    [] [] [] []
-    [] [] [] []
-    [] [] [] []
-    [] [] [] []
-     */
-
     public TicTacFrame() {
 // ---- Frame config: ----------------------------------------
         this.setTitle("Tic Tac Toe.. Toc?");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(660, 660);
         this.getContentPane().setBackground(WHITE);
-        this.setIconImage(titleImg.getImage());
+        this.setIconImage(new ImageIcon("resources/TicTacToe.png").getImage());
         this.setLayout(new BorderLayout());
 
 // ---- ticTacPanel config: -------------------------------
@@ -114,9 +105,9 @@ public class TicTacFrame extends JFrame {
         this.add(eastPanel, "East");
         this.add(westPanel, "West");
 
-        setLocationRelativeTo(null); // Centres the JFrame.
-        setResizable(false);
-        setVisible(true);
+        this.setLocationRelativeTo(null); // Centres the JFrame.
+        this.setResizable(false);
+        this.setVisible(true);
 
         Timer timer = new Timer(250, e -> JOptionPane.showMessageDialog(this,
                 "The game has started!",
